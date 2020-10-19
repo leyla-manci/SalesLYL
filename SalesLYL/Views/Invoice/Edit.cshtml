@@ -1,0 +1,303 @@
+﻿@using SalesLYL.Models
+@using SalesLYL.Models.Mock
+@model SalesLYL.Models.SalesGeneral
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-12">
+    <!-- title -->
+    <h1 class="header-w3ls">Edit Sales Invoice</h1>
+    <!-- //title -->
+    <!-- content -->
+
+    <div class="porduct-order-agile col-md-12">
+        @{
+
+            using (Html.BeginForm())
+            {
+
+
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.salesHead.docNum)
+                @Html.HiddenFor(model => model.salesHead.docType)
+                @Html.HiddenFor(model => model.salesHead.docDate)
+
+                <div class="col-md-3">
+                    <h5 class="info-agile-persnal">Personal Details</h5>
+                    <hr />
+                    <div class="formlyl-group">
+                        <p>  @Html.DisplayNameFor(model => model.salesHead.custName1)</p>
+                        @Html.TextBoxFor(model => model.salesHead.custName1, new { @class = "form-control", @required = "" })
+
+                    </div>
+                    <div class="main">
+
+                        <div class="formlyl-left-to-w3l">
+                            <p>Email </p>
+                            @Html.TextBoxFor(model => model.salesHead.email, new { @class = "form-control", @required = "" })
+                        </div>
+                        <div class="formlyl-left-to-w3l">
+                            <p>Phone</p>
+                            @Html.TextBoxFor(model => model.salesHead.phone, new { @class = "form-control", @required = "", @type = "number" })
+                        </div>
+                    </div>
+
+                    <div class="main">
+                        <div class="formlyl-left-to-w3l">
+                            <p>Address</p>
+                            @Html.TextBoxFor(model => model.salesHead.address, new { @class = "form-control", @required = "" })
+                        </div>
+                        <div class="formlyl-left-to-w3l">
+                            <p>Country </p>
+                            @Html.DropDownListFor(model => model.salesHead.country,
+                          new SelectList(ViewBag.Country, "Id", "Value"),Model.salesHead.country, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="main">
+                        <div class="formlyl-left-to-w3l">
+                            <p>City</p>
+                            @Html.DropDownListFor(model => model.salesHead.city,
+                          new SelectList(ViewBag.City, "Id", "Value"), Model.salesHead.city,new { @class = "form-control" })
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="formlyl-left-to-w3l">
+                            <p>Doc. Date</p>
+                            <input type="datetime" style="width:150px" disabled="disabled" name="docDate" value="@Model.salesHead.docDate" required="">
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="main">
+                        <div class="formlyl-left-to-w3l">
+                            <p>Invoice Type</p>
+                            <input type="text" disabled="disabled" style="width:150px" name="docType" value="@Model.salesHead.docType" required="">
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="formlyl-left-to-w3l">
+                            <p>Invoice Number</p>
+                            <input type="number" style="width:150px" disabled="disabled" name=" @Html.DisplayNameFor(model => model.salesHead.docNum)" value="@Model.salesHead.docNum" required="">
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="main">
+                        <div class="formlyl-left-to-w3l">
+                            <p>Currency</p>
+
+                            @Html.DropDownListFor(model => model.salesHead.currency,
+                          new SelectList(ViewBag.Currency, "Id", "Value"), Model.salesHead.currency,new { @class = "form-control" })
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formlyl-left-to-w3l">
+                            <p>Total</p>
+                            <input type="number" id="lblTotalPrice" class="form-control headgrandtotal" style="width:150px" disabled="disabled" name="grandTotal" value="@Model.salesHead.grandTotal" required="">
+                            <div class="clear"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-actions no-color">
+                                <i class="fas fa-edit">
+                                    <input type="submit" value="Edit" class="btn btn-lg" />
+                                </i> |
+                                @Html.ActionLink("   Back to List", "InvoiceList", "Invoice", null, new { @class = "btn btn-lg fa fa-hand-point-left" })
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+
+                        <h3 class="info-agile-persnal"> Items Detail</h3>
+                        <hr />
+                        <div class="order-list colmd12">
+                            <table class="table tab-content">
+                                <thead>
+                                    <tr>
+                                        <th>Material</th>
+                                        <th>Quantity</th>
+                                        <th>Unit</th>
+                                        <th>Price</th>
+                                        <th>Currency</th>
+                                        <th>Sub Total</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                        <th>Attributes</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody id="allitems">
+                                    @if (!Model.SIEmpty)
+                                    {
+                                        for (int i = 0; i < Model.salesItemList.Count; i++)
+                                        {
+                                            @Html.HiddenFor(model => model.salesItemList[i].docType)
+                                            @Html.HiddenFor(model => model.salesItemList[i].docNum)
+                                            @Html.HiddenFor(model => model.salesItemList[i].itemNum)
+
+
+                                            <tr>
+                                                <td colspan="9"><p class="info-agile-persnal ">Item @Model.salesItemList[i].itemNum</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DropDownListFor(m => Model.salesItemList[i].material,
+                                                  new SelectList(ViewBag.Material, "Id", "Value"), Model.salesItemList[i].material, new { @class = "form-control" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(m => m.salesItemList[i].quantity,
+                                                     new
+                                                     {                                                  
+                                                             @style = "width:80px",
+                                                             @min = "0",
+                                                             @step = "0.01",
+                                                             @class = "form-control qty",
+                                                             @type = "number",
+                                                             @value = Model.salesItemList[i].quantity
+
+                                                         
+                                                     })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(m => Model.salesItemList[i].unit,
+                                                  new SelectList(ViewBag.Unit, "Id", "Value"),Model.salesItemList[i].unit, new { @class = "form-control" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(m => m.salesItemList[i].price,
+                                                   new
+                                                   {
+                                                           @style = "width:80px",
+                                                           @min = "0",
+                                                           @step = "0.01",
+                                                           @class = "form-control price",
+                                                           @type = "number",
+                                                           @value = Model.salesItemList[i].price
+
+
+                                                   })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(m => Model.salesItemList[i].currency,
+                                                  new SelectList(ViewBag.Currency, "Id", "Value"), Model.salesItemList[i].currency,
+                                                  new { @class = "form-control" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(m => m.salesItemList[i].subTotal,
+                                              new
+                                              {
+                                                      @style = "width:80px",
+                                                      @min = "0",
+                                                      @step = "0.01",
+                                                      @disabled="disabled",
+                                                      @class = "form-control subtotal",
+                                                      @type = "number",
+                                                      @value = Model.salesItemList[i].subTotal
+
+
+                                              })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(m => m.salesItemList[i].discount,
+                                                                                         new
+                                                                                         {
+                                                                                                 @style = "width:80px",
+                                                                                                 @min = "0",
+                                                                                                 @step = "0.01",
+                                                                                                 @class = "form-control discount",
+                                                                                                 @type = "number",
+                                                                                                 @value = Model.salesItemList[i].discount
+
+
+                                                                                         })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(m => m.salesItemList[i].grandTotal,
+                                     new
+                                     {
+                                             @style = "width:80px",
+                                             @min = "0",
+                                             @step = "0.01",
+                                             @disabled = "disabled",
+                                             @class = "form-control grandtotal",
+                                             @type = "number",
+                                             @value = Model.salesItemList[i].grandTotal
+
+
+                                     })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(m => Model.salesItemList[i].variantOptions,
+                                                  new SelectList(ViewBag.Variant, "Id", "Value"), Model.salesItemList[i].variantOptions,
+                                                  new { @class = "form-control" })
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    }
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            }
+
+        }
+    </div>
+
+
+
+
+
+</div>
+<script>
+    (function () {
+        "use strict";
+
+        var headgrandtot = parseFloat($('#lblTotalPrice').val());
+        var headsubtot = 0;
+        var headdiscount = 0;
+        $("table").on("change", "input", function () {
+            var row = $(this).closest("tr");
+            var qty = parseFloat(row.find(".qty").val());
+            var price = parseFloat(row.find(".price").val());
+            var discount = parseFloat(row.find(".discount").val());
+            var oldgrandtot = parseFloat(row.find(".grandtotal").val());
+            var olddisc = parseFloat(row.find(".discount").val());
+            var oldsubtot = parseFloat(row.find(".subtotal").val());
+            var subtotal = (isNaN(qty) ? 0 : qty) * (isNaN(price) ? 0 : price);
+            var grandtotal = (isNaN(subtotal) ? 0 : subtotal) - (isNaN(discount) ? 0 : discount);
+            row.find(".subtotal").val(isNaN(subtotal) ? 0 : subtotal);
+            row.find(".grandtotal").val(isNaN(grandtotal) ? 0 : grandtotal);
+
+            headgrandtot = (isNaN(headgrandtot) ? 0 : headgrandtot) + (isNaN(grandtotal) ? 0 : grandtotal) - (isNaN(oldgrandtot) ? 0 : oldgrandtot);
+            headsubtot = (isNaN(headsubtot) ? 0 : headsubtot) + (isNaN(subtotal) ? 0 : subtotal) - (isNaN(oldsubtot) ? 0 : oldsubtot);
+            headdiscount = (isNaN(headdiscount) ? 0 : headdiscount) + (isNaN(discount) ? 0 : discount) - (isNaN(olddisc) ? 0 : olddisc);
+
+
+            $('#lblTotalPrice').val(isNaN(headgrandtot) ? 0 : headgrandtot);
+
+
+        });
+    })();
+</script>
+

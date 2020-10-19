@@ -1,0 +1,151 @@
+﻿@model SalesLYL.Models.SalesInvoice
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="col-md-12">
+    <!-- title -->
+    <h1 class="header-w3ls">Sales Invoice Detail</h1>
+    <!-- //title -->
+    <!-- content -->
+
+    <div class="porduct-order-agile col-md-12">
+        
+            <div class="col-md-4">
+                <h5 class="info-agile-persnal">Personal Details</h5>
+                <hr />
+                <div class="formlyl-group">
+                    <p>  @Html.DisplayNameFor(model => model.salesHead.custName1)</p>
+                    <input type="text" disabled="disabled" name="name" placeholder="@Html.DisplayFor(model => model.salesHead.custName1)" required="">
+
+                </div>
+                <div class="main">
+
+                    <div class="formlyl-left-to-w3l">
+                        <p>Email </p>
+                        <input type="text" disabled="disabled" placeholder="@Html.DisplayFor(model => model.salesHead.email)" required="">
+                    </div>
+                    <div class="formlyl-left-to-w3l">
+                        <p>Phone</p>
+                        <input type="text" disabled="disabled" name="phone" placeholder="@Html.DisplayFor(model => model.salesHead.phone)" required="">
+                    </div>
+                </div>
+
+                <div class="main">
+                    <div class="formlyl-left-to-w3l">
+                        <p>Address</p>
+                        <input type="text" disabled="disabled" name="address" placeholder="@Html.DisplayFor(model => model.salesHead.address)" required="">
+                    </div>
+                    <div class="formlyl-left-to-w3l">
+                        <p>City / Country</p>
+                        <input type="text" disabled="disabled" name="city" placeholder="@Html.DisplayFor(model => model.salesHead.city)| @Html.DisplayFor(model => model.salesHead.country)" required="">
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="formlyl-left-to-w3l">
+                        <p>Doc. Date</p>
+                        <input type="text" name="docDate" disabled="disabled" placeholder="@Html.DisplayFor(model => model.salesHead.docDate)" required="">
+                        <div class="clear"></div>
+                    </div>
+                    <div class="formlyl-left-to-w3l">
+                        <p>Invoice Type/ Number</p>
+                        <input type="text" disabled="disabled" name="docinfo" placeholder="@Html.DisplayFor(model => model.salesHead.docType)| @Html.DisplayFor(model => model.salesHead.docNum)" required="">
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="formlyl-left-to-w3l">
+                        <p>Currency</p>
+                        <input type="text" disabled="disabled" name="currency" placeholder="@Html.DisplayFor(model => model.salesHead.currency)" required="">
+                        <div class="clear"></div>
+                    </div>
+                    <div class="formlyl-left-to-w3l">
+                        <p>Total</p>
+                        <input type="text" disabled="disabled" name="total" placeholder="@Html.DisplayFor(model => model.salesHead.grandTotal)" required="">
+                        <div class="clear"></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+
+                    </div>
+                    <div class="col-md-6">
+
+                        @using (Html.BeginForm("Delete", "Invoice", new { id = Model.salesHead.docNum ,type = Model.salesHead.docType}))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color">
+                                <h5 class="info-agile-persnal-s">Are you sure you want to delete this?</h5>
+                                <i class="fas fa-trash-alt">
+                                    <input type="submit" value="Delete" class="btn btn-lg" />
+                                </i> |
+                                @Html.ActionLink("   Back to List", "InvoiceList", "Invoice", null, new { @class = "btn btn-lg fa fa-hand-point-left" })
+                            </div>
+
+                        }
+                    </div>
+                </div>
+             
+                <h3 class="info-agile-persnal"> Items Detail</h3>
+                <hr />
+                <div class="order-list">
+                    <table class="table tab-content">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>Price</th>
+                                <th>Currency</th>
+                                <th>Sub Total</th>
+                                <th>Discount</th>
+                                <th>Total</th>
+                                <th>Attributes</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.salesItemList)
+                            {
+                                <tr>
+                                    <td colspan="9"><p class="info-agile-persnal">Item @item.itemNum</p></td>
+                                </tr>
+                                <tr>
+                                    <td>   @item.material</td>
+                                    <td> @item.quantity</td>
+                                    <td>
+                                        @item.unit
+                                        </td>
+                                    <td> @item.price</td>
+                                    <td> @item.currency</td>
+                                    <td> @item.subTotal</td>
+                                    <td>@item.discount</td>
+                                    <td> @item.grandTotal</td>
+                                    <td> @item.variantOptions</td>
+                                </tr>
+
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+
+            </div>
+
+      
+    </div>
+
+
+
+</div>
+

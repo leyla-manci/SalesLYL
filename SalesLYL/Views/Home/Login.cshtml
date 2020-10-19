@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--//header-->
+<div class="col-md-12">
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+        <div class="main-content-agile">
+            <div class="sub-main-w3">
+                <h2>Login Here</h2>
+                <form action="Home/Login" method="post">
+                    <div class="pom-agile">
+                        <span class="fa fa-user-o" aria-hidden="true"></span>
+                        <input placeholder="User" name="Name" class="user" maxlength="10" type="text" required="">
+                    </div>
+                    <div class="pom-agile">
+                        <span class="fa fa-key" aria-hidden="true"></span>
+                        <input placeholder="Password" name="Password" class="pass" maxlength="10" type="password" required="">
+                    </div>
+                    <div class="sub-w3l">
+                        <div class="sub-agile">
+                            <input type="checkbox" id="brand1" value="">
+                            <label for="brand1">
+                                <span></span>Remember me
+                            </label>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="right-w3l">
+                        <input type="submit" value="Login">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--//main-->
+<!--footer-->

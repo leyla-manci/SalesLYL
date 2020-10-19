@@ -1,0 +1,92 @@
+﻿@model IEnumerable<SalesLYL.Models.SalesHead>
+
+@{
+    ViewBag.Title = "InvoiceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12 ">
+    <div class="col-md-3">    
+       
+            @Html.ActionLink("  Create New Invoice", "Create", null, new { @class = "btn btn-lg fa fa-plus" })
+                   
+        
+    </div>
+    <div class="col-md-9 "></div>
+</div>
+
+<table class="table  table-light">
+    <thead class=" thead-dark header-w3l">
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.docType)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.docNum)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.custName1)
+            </th>
+
+
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.docDate)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.grandTotal)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.currency)
+            </th>
+
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.country)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.city)
+            </th>
+
+
+
+            <th></th>
+        </tr>
+       
+    </thead>
+  
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.docType)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.docNum)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.custName1)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.docDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.grandTotal)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.currency)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.country)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.city)
+    </td>
+    <td>
+        @Html.ActionLink(" ", "Edit", new { id = item.docNum , type = item.docType }, new { @class = "btn  btn-sm fa fa-pencil" }) |
+        @Html.ActionLink(" ", "Details", new { id = item.docNum , type = item.docType }, new { @class = "btn  btn-sm fa fa-info" }) | 
+        @Html.ActionLink(" ", "Delete", new { id = item.docNum, type = item.docType }, new { @class = "btn  btn-sm fa fa-trash" })
+    </td>
+</tr>
+}
+
+</table>
